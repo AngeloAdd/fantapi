@@ -1,0 +1,28 @@
+{
+  "name": "api-fp22",
+  "version": "1.0.0",
+  "description": "Main api for world cup game",
+  "type": "module",
+  "main": "src/server.js",
+  "exports": "./src/server.js",
+  "engines": {
+    "npm": ">=8.5.5",
+    "node": ">=16.15.0"
+  },
+  "scripts": {
+    "start": "node -r dotenv/config src/server.js",
+    "watch": "nodemon -r dotenv/config src/server.js",
+    "test": "LOG_ENABLED=false node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "LOG_ENABLED=false node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js -w",
+    "fix": "prettier --write src",
+    "check": "prettier --check src",
+    "lint": "eslint --fix src",
+    "lint:check": "eslint src"
+  },
+  "author": "Angelo Adduci",
+  "license": "ISC",
+  "keywords": [
+    "api",
+    "world cup"
+  ]
+}
