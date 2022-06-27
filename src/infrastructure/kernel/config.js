@@ -77,6 +77,12 @@ const config = convict({
       default: 'password',
       env: 'DB_PASSWORD',
     },
+    dialect: {
+      doc: 'SQL dialect',
+      format: String,
+      default: 'postgres',
+      env: 'DB_DIALECT',
+    },
   },
   logging: {
     enabled: {
