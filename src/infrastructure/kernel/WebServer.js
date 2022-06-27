@@ -9,7 +9,7 @@ export default class WebServer {
   constructor(config) {
     this.config = config;
     this.logger = new Logger(config.get('logging')).get();
-    this.db = new DbConnection(config.get('database'));
+    this.db = new DbConnection(config.get('database'), this.logger);
     this.app = new Application(config, this.logger).create();
   }
 
