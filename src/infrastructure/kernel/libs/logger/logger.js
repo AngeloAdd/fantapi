@@ -1,7 +1,7 @@
 import path from 'path';
 import {createLogger, format, transports} from 'winston';
 
-const {combine, splat, json, timestamp, prettyPrint, colorize} = format;
+const {combine, splat, json, timestamp, cli, colorize} = format;
 
 export default class Logger {
   constructor(config) {
@@ -14,8 +14,8 @@ export default class Logger {
       level: this.config?.level ?? 'debug',
       format: combine(splat(), timestamp(), json()),
       transports: [
-        new transports.Console({format: combine(colorize(), prettyPrint())}),
-        new transports.File({filename: path.join(this.config.logsDir, this._getLogFileName())}),
+        new transports.Console({format: combine(colorize(), cli())}),
+        new transports.File({filename: path.join(this.config?.logsDir ?? 'logs', this._getLogFileName())}),
       ],
     });
   }

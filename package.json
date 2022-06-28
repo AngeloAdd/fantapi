@@ -3,21 +3,21 @@
   "version": "1.0.0",
   "description": "Main api for world cup game",
   "type": "module",
-  "main": "src/server.js",
-  "exports": "./src/server.js",
+  "main": "bin src/server.js",
+  "exports": "./bin src/server.js",
   "engines": {
     "npm": ">=8.5.5",
     "node": ">=16.15.0"
   },
   "scripts": {
-    "start": "node -r dotenv/config src/server.js",
-    "watch": "nodemon -r dotenv/config src/server.js",
+    "start": "node -r dotenv/config bin/start.js",
+    "watch": "nodemon -r dotenv/config bin/start.js",
     "test": "LOG_ENABLED=false node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "LOG_ENABLED=false node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js -w",
-    "fix": "prettier --write src",
-    "check": "prettier --check src",
-    "lint": "eslint --fix src",
-    "lint:check": "eslint src"
+    "fix": "prettier --write bin src",
+    "check": "prettier --check bin src",
+    "lint": "eslint --fix bin src",
+    "lint:check": "eslint bin src"
   },
   "author": "Angelo Adduci",
   "license": "ISC",
@@ -33,6 +33,7 @@
     "winston": "^3.8.0"
   },
   "devDependencies": {
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "nodemon": "^2.0.18"
   }
 }

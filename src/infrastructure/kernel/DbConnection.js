@@ -13,6 +13,7 @@ export default class DbConnection {
       host: this.config.host,
       port: this.config.port,
       dialect: this.config.dialect,
+      logging: this.logger.debug.bind(this.logger),
     });
 
     try {
