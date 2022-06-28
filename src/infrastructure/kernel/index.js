@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import WebServer from './WebServer.js';
 import config from './config.js';
 import Logger from './libs/logger/logger.js';
