@@ -49,14 +49,14 @@ const config = convict({
   database: {
     host: {
       doc: 'Database host name/IP',
-      format: '*',
-      default: 'server1.dev.test',
+      format: String,
+      default: 'localhost',
       env: 'DB_HOST',
     },
     port: {
-      doc: 'Database host name/IP',
-      format: '*',
-      default: 'server1.dev.test',
+      doc: 'Database port',
+      format: 'port',
+      default: 5435,
       env: 'DB_PORT',
     },
     name: {
