@@ -1,12 +1,9 @@
-import WebServer from '../src/infrastructure/kernel/WebServer.js';
-import config from '../src/infrastructure/kernel/config.js';
-
-const webServer = new WebServer(config);
+import webServer from '../src/infrastructure/kernel/index.js';
 
 webServer.start().catch(error => {
   webServer.logger.fatal('An error occurred, impossible to start web server', error);
 
-  webServer.db.close(() => {
+  webServer.dbConnection.close(() => {
     webServer.server.close(() => {
       process.exit(1);
     });

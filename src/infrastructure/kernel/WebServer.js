@@ -1,16 +1,13 @@
 import http from 'http';
-import Logger from './libs/logger/logger.js';
-import DbConnection from './DbConnection.js';
-import Application from './Application.js';
 
 export default class WebServer {
   server;
 
-  constructor(config) {
+  constructor(config, logger, dbConnection, app) {
     this.config = config;
-    this.logger = new Logger(config.get('logging')).get();
-    this.db = new DbConnection(config.get('database'), this.logger);
-    this.app = new Application(config, this.logger).create();
+    this.logger = logger;
+    this.dbConnection = dbConnection;
+    this.app = app;
   }
 
   async boot() {
@@ -21,7 +18,7 @@ export default class WebServer {
   }
 
   async start() {
-    await this.db.connect();
+    await this.dbConnection.connect();
     await this.boot();
   }
 }
