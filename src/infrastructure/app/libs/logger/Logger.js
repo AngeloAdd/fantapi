@@ -5,10 +5,10 @@ import pino from 'pino';
 class Logger {
   constructor(config) {
     this.config = config;
-    this.fileLogger = this._setLoggerStream();
+    this.fileLogger = this._setLogger();
   }
 
-  _setLoggerStream() {
+  _setLogger() {
     const prettified = {levelFirst: true, level: this.config.level, stream: pino.destination(1)};
     const filesystem = {
       level: this.config.logStoredLevel,
@@ -36,41 +36,6 @@ class Logger {
         },
       },
       pino.multistream([prettified, filesystem]),
-    );
-  }
-
-  _setLoggerWithTransport() {
-    return pino(
-      {
-        timestamp: pino.stdTimeFunctions.isoTime,
-        level: 'debug',
-        base: undefined,
-        levels: {
-          ciao: 25,
-        },
-      },
-      pino.transport({
-        levels: {ciao: 25},
-        targets: [
-          {
-            target: 'pino/file',
-            options: {
-              level: 'ciao',
-              destination: path.join(this.config?.logsDir ?? 'logs', this._getLogFileName()),
-              mkdir: true,
-            },
-          },
-          {
-            target: 'pino/file',
-            options: {
-              level: 'ciao',
-              levelFirst: true,
-              colorize: true,
-              destination: 1,
-            },
-          },
-        ],
-      }),
     );
   }
 
