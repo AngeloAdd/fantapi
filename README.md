@@ -32,7 +32,7 @@ in watch mode:
 npm run test:watch
 ```
 
-## Static Linting
+## Static Analysis and Linting
 
 Eslint
 
