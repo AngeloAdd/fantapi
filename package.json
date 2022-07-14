@@ -10,8 +10,8 @@
     "node": ">=16.15.0"
   },
   "scripts": {
-    "start": "node -r dotenv/config bin/start.js",
-    "watch": "nodemon -r dotenv/config bin/start.js",
+    "start": "node -r dotenv/config bin/start.js | pino-pretty -c -l",
+    "watch": "nodemon -r dotenv/config bin/start.js | pino-pretty -c -l",
     "test": "LOG_ENABLED=false node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "LOG_ENABLED=false node -r dotenv/config --experimental-vm-modules node_modules/jest/bin/jest.js -w",
     "fix": "prettier --write bin src",
@@ -30,8 +30,10 @@
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "pg": "^8.7.3",
-    "sequelize": "^6.21.1",
-    "winston": "^3.8.0"
+    "pino": "^8.1.0",
+    "pino-http": "^8.1.0",
+    "pino-pretty": "^8.1.0",
+    "sequelize": "^6.21.1"
   },
   "devDependencies": {
     "dotenv": "^16.0.1",
