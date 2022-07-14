@@ -33,13 +33,17 @@
       }
     },
     {
-      "files": ["api-errors.js"],
+      "files": [
+        "api-errors.js"
+      ],
       "rules": {
         "max-classes-per-file": "off"
       }
     },
     {
-      "files": ["api-errors.js"],
+      "files": [
+        "api-errors.js"
+      ],
       "rules": {
         "max-classes-per-file": "off"
       }
@@ -56,6 +60,10 @@
   },
   "rules": {
     "import/extensions": "off",
-    "object-curly-spacing": "off"
+    "object-curly-spacing": "off",
+    "operator-linebreak": [
+      "error",
+      "after"
+    ]
   }
 }
