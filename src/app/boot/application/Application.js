@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import {pinoHttp} from 'pino-http';
+import helmet from 'helmet';
 import handleNotFoundMiddleware from '../../libs/http/middlewares/handleNotFound.middleware.js';
 import handleErrorMiddleware from '../../libs/http/middlewares/handleError.middleware.js';
 
@@ -15,6 +16,7 @@ export default class Application {
   async expressApp() {
     const expressApp = express();
     expressApp.locals.errorHandler = this.errorHandler;
+    expressApp.use(helmet());
     expressApp.use(cors());
     expressApp.use(express.json());
     expressApp.use(
