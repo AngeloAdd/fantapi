@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  #  api:
+  #    container_name: api
+  #    build: .
+  #    restart: always
+  #    ports:
+  #      - 8000:8000
+  #    volumes:
+  #      - .:/usr/app
+  #      - ./node_modules:/usr/app/node_modules
+  #    command: /usr/app/node_modules/.bin/nodemon -r dotenv/config src/server.js
+
+  db:
+    container_name: db
+    image: postgres:14-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - .ops/data/fantapi-db/postgresql:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=fantapi
