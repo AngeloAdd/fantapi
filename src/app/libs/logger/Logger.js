@@ -1,20 +1,20 @@
 import path from 'path';
-import config from '../config/index.js';
 import pino from 'pino';
 
 class Logger {
   constructor(config) {
     this.config = config;
-    this.fileLogger = this._setLogger();
+    this.date = new Date();
+    this.fileLogger = this.setLogger();
   }
 
-  _setLogger() {
+  setLogger() {
     const prettified = {levelFirst: true, level: this.config.level, stream: pino.destination(1)};
     const filesystem = {
       level: this.config.logStoredLevel,
       sync: true,
       stream: pino.destination({
-        dest: path.join(this.config?.logsDir ?? 'logs', this._getLogFileName()),
+        dest: path.join(this.config?.logsDir ?? 'logs', this.getLogFileName()),
         sync: true,
         append: true,
       }),
@@ -24,15 +24,10 @@ class Logger {
       {
         enabled: this.config.enabled,
         base: undefined,
-        level: 'ciao',
-        customLevels: {
-          ciao: 25,
-        },
+        level: this.config?.level ?? 'trace',
         timestamp: pino.stdTimeFunctions.isoTime,
         formatters: {
-          level: (label) => {
-            return {level: label.toUpperCase()};
-          },
+          level: (label) => ({level: label.toUpperCase()}),
         },
       },
       pino.multistream([prettified, filesystem]),
@@ -43,16 +38,14 @@ class Logger {
     return this.fileLogger;
   }
 
-  _getLogFileName = () => {
+  getLogFileName() {
     const addZeroIfSingleDigit = (val) => (/^\d$/.test(val) ? `0${val}` : val);
-    const day = new Date().getDate().toString();
-    const month = (new Date().getMonth() + 1).toString();
-    const year = new Date().getFullYear();
+    const day = this.date.getDate().toString();
+    const month = (this.date.getMonth() + 1).toString();
+    const year = this.date.getFullYear();
 
     return `${addZeroIfSingleDigit(day)}_${addZeroIfSingleDigit(month)}_${year}.log`;
-  };
-
-  _isSilent = (enabled) => !(enabled ?? true);
+  }
 }
 
-export default new Logger(config.logging).get();
+export default Logger;

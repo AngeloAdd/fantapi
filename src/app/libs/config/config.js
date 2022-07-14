@@ -1,5 +1,5 @@
 import convict from 'convict';
-import {getLogsDir, getProjectDir} from './libs/utils/path-finder.js';
+import {getLogsDir, getProjectDir} from '../utils/path-finder.js';
 
 const config = convict({
   env: {
@@ -94,11 +94,17 @@ const config = convict({
     level: {
       doc: 'Determine level of logging',
       format: String,
-      default: 'debug',
+      default: 'trace',
       env: 'LOG_LEVEL',
     },
+    logStoredLevel: {
+      doc: 'Determine level of logging for logs stored',
+      format: String,
+      default: 'info',
+      env: 'LOG_STORED_LEVEL',
+    },
     logsDir: {
-      doc: 'directory to store logs',
+      doc: 'directory to store logs, has to be ensured at bootstrap',
       format: String,
       default: getLogsDir(),
     },
