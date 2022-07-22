@@ -6,9 +6,10 @@ import handleNotFoundMiddleware from '../../libs/http/middlewares/handleNotFound
 import handleErrorMiddleware from '../../libs/http/middlewares/handleError.middleware.js';
 
 export default class Application {
-  constructor(config, logger, errorHandler) {
+  constructor(config, logger, routesLoader, errorHandler) {
     this.config = config;
     this.logger = logger;
+    this.routesLoader = routesLoader;
     this.errorHandler = errorHandler;
     this.appServices = {};
   }
@@ -16,6 +17,7 @@ export default class Application {
   async expressApp() {
     const expressApp = express();
     expressApp.locals.errorHandler = this.errorHandler;
+    expressApp.locals.logger = this.logger;
     expressApp.use(helmet());
     expressApp.use(cors());
     expressApp.use(express.json());
@@ -25,8 +27,7 @@ export default class Application {
         useLevel: 'debug',
       }),
     );
-    expressApp.get('/favicon.ico', (req, res) => res.status(204));
-    expressApp.get('/', (req, res) => res.json(['ok']));
+    this.routesLoader.load(expressApp);
     expressApp.use(handleNotFoundMiddleware);
     expressApp.use(handleErrorMiddleware(this.errorHandler));
     return expressApp;
