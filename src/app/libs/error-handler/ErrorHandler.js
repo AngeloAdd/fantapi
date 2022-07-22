@@ -15,7 +15,7 @@ export default class ErrorHandler extends EventEmitter {
 
   handleError(error, response = null) {
     // logs and metrics
-    this.logger.error(error, 'ErrorHandler', {isTrusted: error?.isTrusted ?? false});
+    this.logger.error(error, {isTrusted: error?.isTrusted ?? false});
     return this.crushOrSendResponse(error, response);
   }
 
