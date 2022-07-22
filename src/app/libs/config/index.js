@@ -1,7 +1,7 @@
 import config from './config.js';
 
 export default {
-  config: config.get(),
+  get: config.get(),
   logging: config.get('logging'),
   database: config.get('database'),
 };
