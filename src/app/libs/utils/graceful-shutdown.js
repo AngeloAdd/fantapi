@@ -3,14 +3,10 @@ import logger from '../logger/index.js';
 
 export default (server) => (code) => async (reason) => {
   try {
-    if (reason instanceof Error) {
-      logger.error(reason);
-    } else {
-      logger.info(`Exiting process with reason: ${reason}`);
-    }
+    logger.info(`Exiting process with reason: ${reason?.stack ?? reason}`);
 
     logger.trace('Closing database...');
-    server.app.appServices.database.close();
+    server.app.database?.close();
     logger.trace('Database closed!');
 
     logger.trace('Closing node server...');

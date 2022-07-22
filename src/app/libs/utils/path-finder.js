@@ -7,8 +7,12 @@ export function getProjectDir() {
 
 export const getSrcDir = () => path.join(getProjectDir(), 'src');
 
-export const getInfrastructureDir = () => path.join(getSrcDir(), 'infrastructure');
+export const getAppDir = () => path.join(getSrcDir(), 'app');
 
-export const getConfigPath = () => path.join(getSrcDir(), path.join('config', 'config.js'));
+export const getLibsPath = () => path.join(getAppDir(), 'libs');
+
+export const getConfigPath = () => path.join(getLibsPath(), path.join('config'));
 
 export const getLogsDir = () => path.join(getProjectDir(), 'logs');
+
+export const getModulesDir = () => path.join(getSrcDir(), 'modules');
