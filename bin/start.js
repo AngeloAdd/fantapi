@@ -4,22 +4,14 @@ import manageDb from '../src/app/boot/services/database/index.js';
 import {signals} from '../src/app/libs/utils/constants.js';
 
 async function start() {
-  try {
-    await webServer.start();
-    try {
-      await manageDb.start();
-      webServer.app.registerDatabase(manageDb);
-    } catch (onStartException) {
-      webServer.app.errorHandler.handleError(onStartException);
-    }
+  process.on('uncaughtException', (error) => {
+    webServer.app.errorHandler.handleError(error);
+  });
 
+  try {
     // handle programmer errors
     process.on('unhandledRejection', (error) => {
       throw error;
-    });
-
-    process.on('uncaughtException', (error) => {
-      webServer.app.errorHandler.handleError(error);
     });
 
     Object.keys(signals).forEach((signal) => {
@@ -30,10 +22,21 @@ async function start() {
       webServer.app.errorHandler.getEventName(),
       gracefulShutdown(webServer)(1),
     );
+
+    await webServer.start();
+    try {
+      await manageDb.start();
+      webServer.app.registerDatabase(manageDb);
+    } catch (onStartException) {
+      webServer.app.errorHandler.handleError(onStartException);
+    }
   } catch (err) {
-    webServer.app.logger.error(err, 'Impossible to start server, exiting process...');
+    webServer.app.logger.fatal(err, 'Impossible to start server, exiting process...');
     process.exit(1);
   }
 }
 
-start();
+start().catch((error) => {
+  webServer.app.logger.fatal(error);
+  process.exit(1);
+});
